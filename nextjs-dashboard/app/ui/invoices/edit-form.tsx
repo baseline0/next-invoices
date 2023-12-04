@@ -1,6 +1,7 @@
 'use client';
 
-import { updateInvoice} from  '@/app/lib/actions';  
+import { updateInvoice } from '@/app/lib/actions';
+import { useFormState } from 'react-dom';
 
 import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
 import {
@@ -19,12 +20,17 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
-  const initialState = {message: null, error: {}};
+  const initialState = { message: null, error: {} };
   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
-  const [state, dispatch] = useFormState(updateInvoiceWithId, initialState);
+// FIXME
+// orig
+//  const [state, dispatch] = useFormState(updateInvoiceWithId, initialState);
+// pattern
+// function updateInvoiceWithId(formData: FormData): Promise<FormData> {
+//   return new Promise((resolve, reject) => {
 
   return (
-    <form action={dispatch}>
+    <form action={updateInvoiceWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
